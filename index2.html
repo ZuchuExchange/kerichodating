@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Access</title>
+    <title>Pay Number</title>
     <style>
         :root { --xv-orange: #ff9900; --dark-black: #0b141a; }
         body { background: var(--dark-black); color: white; font-family: Arial; margin: 0; }
         
         /* Modal Style for Processing */
         #processing-window {
-            display: none; positionh fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;
             flex-direction: column; text-align: center;
         }
@@ -48,7 +48,8 @@
 <div class="main-container">
     <div class="join-box">
         <h2 style="color: var(--xv-orange);">UNLOCK ACCESS (KSH 50)</h2>
-        <p style="font-size: 15px; color: #888;">You will receive an M-Pesa STK push to complete payment. After completing your payment your matched partner's phone number will automatically be unlocked.</p>
+        <p style="font-size: 15px; color: #888;"> <strong> Unlock Your matched partner's Phone Number</strong>.
+        You will receive an M-Pesa STK push to complete payment.</p>
 
         <div class="input-group">
             <label>M-Pesa Name</label>
@@ -105,7 +106,7 @@
         
         const payload = {
             phone_number: phoneInput.value,
-            amount: 100
+            amount: 50
         };
 
         try {
