@@ -3,66 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pay Number</title>
+    <title>Kericho Dating | Secure Payment</title>
     <style>
-        :root { --xv-orange: #ff9900; --dark-black: #0b141a; }
-        body { background: var(--dark-black); color: white; font-family: Arial; margin: 0; }
+        :root { 
+            --kericho-green: #2e7d32; 
+            --tea-leaf: #4caf50;
+            --deep-forest: #1b3022; 
+            --status-orange: #ff9900;
+            --white: #ffffff;
+            --error-red: #ff5252;
+        }
+
+        body { 
+            background: radial-gradient(circle at top, #2d4a3e, #0b141a); 
+            color: var(--white); 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
         
-        /* Modal Style for Processing */
+        /* Premium Processing Modal */
         #processing-window {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;
-            flex-direction: column; text-align: center;
+            background: rgba(11, 20, 26, 0.95); z-index: 1000; justify-content: center; 
+            align-items: center; flex-direction: column; text-align: center;
+            backdrop-filter: blur(8px);
         }
+
         .spinner {
-            border: 8px solid #333; border-top: 8px solid var(--xv-orange);
-            border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;
+            border: 5px solid rgba(255, 255, 255, 0.1); 
+            border-top: 5px solid var(--status-orange);
+            border-radius: 50%; width: 50px; height: 50px; 
+            animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
             margin-bottom: 20px;
         }
+
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .main-container { max-width: 600px; margin: auto; padding: 20px; text-align: center; }
-        .join-box { background: #1b1b1b; padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; }
-        input { 
-            width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; 
-            background: #000; color: white; font-size: 16px; box-sizing: border-box; 
+        .main-container { width: 100%; max-width: 420px; padding: 20px; }
+
+        .join-box { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
         }
-        .error-alert { color: #f15c6d; font-size: 12px; margin-top: 5px; display: none; }
+
+        .logo-area { margin-bottom: 20px; }
+        .logo-area h1 { margin: 0; font-size: 24px; color: var(--tea-leaf); letter-spacing: 1px; }
+
+        h2 { margin-top: 10px; font-size: 18px; color: #eee; font-weight: 500; }
+        .price-tag { 
+            display: inline-block; 
+            background: var(--kericho-green); 
+            padding: 5px 15px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        p { font-size: 14px; color: #aaa; line-height: 1.5; margin-bottom: 25px; }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-size: 13px; color: var(--tea-leaf); margin-bottom: 8px; font-weight: 600; }
+        
+        input { 
+            width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #333; 
+            background: rgba(0, 0, 0, 0.3); color: white; font-size: 16px; 
+            box-sizing: border-box; transition: 0.3s;
+        }
+        input:focus { outline: none; border-color: var(--tea-leaf); background: rgba(0, 0, 0, 0.5); }
+
+        .error-alert { color: var(--error-red); font-size: 12px; margin-top: 6px; display: none; }
         
         button {
-            width: 100%; padding: 15px; background: #555; color: #888; border: none;
-            border-radius: 5px; font-weight: bold; cursor: not-allowed; transition: 0.3s;
+            width: 100%; padding: 16px; background: #333; color: #777; border: none;
+            border-radius: 10px; font-size: 16px; font-weight: bold; cursor: not-allowed; 
+            transition: all 0.4s ease; text-transform: uppercase; letter-spacing: 1px;
         }
-        button.active { background: var(--xv-orange); color: black; cursor: pointer; }
+
+        button.active { 
+            background: linear-gradient(135deg, var(--tea-leaf), var(--kericho-green)); 
+            color: white; cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        button.active:hover { transform: translateY(-2px); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
 <div id="processing-window">
     <div class="spinner"></div>
-    <h3 id="status-text" style="color: var(--xv-orange);">SENDING STK PUSH, PLEASE WAIT...</h3>
+    <h3 id="status-text">SENDING STK PUSH...</h3>
+    <p id="sub-status" style="color: #888; font-size: 13px;">Please check your phone for the M-Pesa prompt</p>
 </div>
 
 <div class="main-container">
     <div class="join-box">
-        <h2 style="color: var(--xv-orange);">UNLOCK ACCESS (KSH 50)</h2>
-        <p style="font-size: 15px; color: #888;"> <strong> Unlock Your matched partner's Phone Number</strong>.
-        You will receive an M-Pesa STK push to complete payment.</p>
+        <div class="logo-area">
+            <h1>KERICHO DATING</h1>
+            <div class="price-tag">KSH 100</div>
+        </div>
+        
+        <h2>Connect with your Match</h2>
+        <p>Unlock the full profile and contact details instantly. Safe and secure via M-Pesa.</p>
 
         <div class="input-group">
-            <label>M-Pesa Name</label>
-            <input type="text" id="mpesa_name" placeholder="Name on M-Pesa">
+            <label>M-Pesa Registered Name</label>
+            <input type="text" id="mpesa_name" placeholder="e.g. John Doe">
         </div>
 
         <div class="input-group">
             <label>M-Pesa Phone Number</label>
             <input type="tel" id="phone_num" placeholder="07xxxxxxxx or 01xxxxxxxx">
-            <div id="phone-error" class="error-alert">Weka namba sahihi ya Kenya (07.. au 01..)</div>
+            <div id="phone-error" class="error-alert">Please enter a valid Kenya number (07... or 01...)</div>
         </div>
 
-        <button id="pay-btn" disabled>PAY NOW</button>
+        <button id="pay-btn" disabled>Unlock Now</button>
+        
+        <p style="font-size: 11px; margin-top: 20px; opacity: 0.6;">
+            By clicking Unlock, you will receive an STK Push on your phone.
+        </p>
     </div>
 </div>
 
@@ -74,21 +141,18 @@
     const modal = document.getElementById('processing-window');
     const statusText = document.getElementById('status-text');
 
-    // Validation Regex: 07 or 01 followed by 8 digits
     const kenyaPhoneRegex = /^(07|01)\d{8}$/;
 
     function validateForm() {
         const isPhoneValid = kenyaPhoneRegex.test(phoneInput.value);
-        const isNameFilled = nameInput.value.trim().length > 0;
+        const isNameFilled = nameInput.value.trim().length > 1;
 
-        // Toggle Error Text
-        if (phoneInput.value.length > 0 && !isPhoneValid) {
+        if (phoneInput.value.length >= 10 && !isPhoneValid) {
             phoneError.style.display = "block";
         } else {
             phoneError.style.display = "none";
         }
 
-        // Enable/Disable Button
         if (isPhoneValid && isNameFilled) {
             payBtn.classList.add('active');
             payBtn.disabled = false;
@@ -104,9 +168,13 @@
     payBtn.addEventListener('click', async () => {
         modal.style.display = "flex";
         
+        // Phase 1: Sending (Orange)
+        statusText.innerText = "SENDING STK PUSH...";
+        statusText.style.color = "var(--status-orange)";
+        
         const payload = {
             phone_number: phoneInput.value,
-            amount: 50
+            amount: 100 
         };
 
         try {
@@ -117,20 +185,25 @@
             });
 
             if (response.ok) {
-                statusText.innerText = "STK PUSH SENT! ENTER YOUR MPESA PIN";
-                statusText.style.color = "#00ff00";
-                // Redirect after success simulation
-                setTimeout(() => { window.location.href = "success.html"; }, 5000);
+                // Phase 2: Sent (Green)
+                statusText.innerText = "STK PUSH SENT! ENTER PIN";
+                statusText.style.color = "var(--tea-leaf)";
+                
+                setTimeout(() => { 
+                    window.location.href = "success.html"; 
+                }, 6000);
             } else {
-                throw new Error("System Busy. Jaribu tena baadae.");
+                throw new Error("System Busy. Please try again.");
             }
         } catch (error) {
             statusText.innerText = "ERROR: " + error.message;
-            statusText.style.color = "#ff3b3b";
-            setTimeout(() => { modal.style.display = "none"; }, 3000);
+            statusText.style.color = "var(--error-red)";
+            setTimeout(() => { 
+                modal.style.display = "none"; 
+            }, 3500);
         }
     });
 </script>
 
 </body>
-</html>
+    </html>
