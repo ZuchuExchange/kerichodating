@@ -19,9 +19,8 @@
             background: #e2e8f0;
         }
 
-        /* Updated Gallery Progress (4 Segments) */
         .status-segment { height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; flex: 1; overflow: hidden; }
-        .status-progress { height: 100%; width: 0%; background: white; transition: width 15s linear; }
+        .status-progress { height: 100%; width: 0%; background: white; }
         
         .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 15px; }
         .modal.active { display: flex; }
@@ -30,119 +29,156 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .engaged-banner { background: #f97316; color: white; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: bold; position: absolute; top: 10px; right: 10px; z-index: 10; }
-        
         .logo-container {
             background: white; width: 80px; height: 80px; border-radius: 20px;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* How it Works Custom Styles */
         .step-card {
             background: white; padding: 20px; border-radius: 20px;
             border: 1px solid #e2e8f0; transition: transform 0.3s ease;
         }
-        .step-card:hover { transform: translateY(-5px); }
-        .step-number {
-            width: 35px; height: 35px; background: #10b981; color: white;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-weight: bold; margin: 0 auto 10px;
+
+        #notification {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            padding: 12px 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 12px; z-index: 1000;
+            transform: translateY(150%); transition: transform 0.5s ease;
+            border-left: 4px solid #10b981;
         }
+        #notification.show { transform: translateY(0); }
     </style>
 </head>
 <body>
+
+    <!-- Trust Bar -->
+    <div class="bg-emerald-950 py-2 text-[10px] md:text-xs text-emerald-100 font-bold tracking-widest text-center px-4">
+        <span class="mx-3"><i class="fas fa-shield-alt text-emerald-400 mr-1"></i> ID VERIFIED PROFILES</span>
+        <span class="mx-3"><i class="fas fa-lock text-emerald-400 mr-1"></i> SECURE MPESA PAYMENTS</span>
+        <span class="mx-3"><i class="fas fa-check-double text-emerald-400 mr-1"></i> 100% DISCREET</span>
+    </div>
 
     <header class="bg-emerald-900 text-white py-12 px-6 text-center shadow-lg">
         <div class="logo-container">
             <i class="fas fa-heart-pulse text-4xl text-emerald-600"></i>
         </div>
         <h1 class="text-4xl md:text-5xl font-bold mb-2">Kericho Dating</h1>
-        <div class="h-1 w-24 bg-emerald-500 mx-auto mb-4 rounded-full"></div>
-        <p class="text-lg opacity-80 max-w-2xl mx-auto italic">"Connecting hearts in the Green Highlands. Find your perfect Kalenjin partner today."</p>
+        <p class="text-lg opacity-80 max-w-2xl mx-auto italic mb-6">"Connecting hearts in the Green Highlands."</p>
+        
+        <div class="inline-flex items-center gap-2 bg-black/20 rounded-full px-4 py-1 text-sm border border-white/10">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span id="live-counter">142</span> Men browsing right now
+        </div>
     </header>
 
-    <section class="bg-slate-50 py-12 px-4 border-b">
+    <!-- How It Works -->
+    <section class="bg-white py-12 px-4 border-b">
         <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">Start Your Journey</h2>
-            <p class="text-gray-500 mb-10">Follow these simple steps to meet your match</p>
-            
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">How It Works</h2>
+            <p class="text-gray-500 mb-10">Follow our secure 3-step verification process</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3 class="font-bold text-emerald-800 mb-2">Find Your Match</h3>
-                    <p class="text-sm text-gray-600">Browse 100% verified profiles of Kalenjin ladies from all over Kericho County.</p>
+                    <div class="flex justify-center mb-4 text-emerald-600 text-3xl"><i class="fas fa-search"></i></div>
+                    <h3 class="font-bold text-emerald-800 mb-2">1. Browse Profiles</h3>
+                    <p class="text-sm text-gray-600">All ladies are 100% verified with ID checks to ensure they are real residents of Kericho.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3 class="font-bold text-emerald-800 mb-2">Unlock Contact</h3>
-                    <p class="text-sm text-gray-600">Pay a small commitment fee of <span class="font-bold text-emerald-600">Ksh 100</span> to access her direct phone number.</p>
+                    <div class="flex justify-center mb-4 text-emerald-600 text-3xl"><i class="fas fa-credit-card"></i></div>
+                    <h3 class="font-bold text-emerald-800 mb-2">2. Commitment Fee</h3>
+                    <p class="text-sm text-gray-600">Pay a small service fee of <span class="font-bold text-emerald-600">Ksh 100</span> via M-PESA to unlock contact.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3 class="font-bold text-emerald-800 mb-2">Chat & Meet</h3>
-                    <p class="text-sm text-gray-600">Start your conversation on WhatsApp immediately and plan your first date!</p>
+                    <div class="flex justify-center mb-4 text-emerald-600 text-3xl"><i class="fas fa-comments"></i></div>
+                    <h3 class="font-bold text-emerald-800 mb-2">3. Direct Connection</h3>
+                    <p class="text-sm text-gray-600">Get her number instantly. No middleman. Start chatting and plan your meet-up.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Main Grid -->
     <main class="max-w-7xl mx-auto py-12 px-4">
         <div id="profile-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </main>
 
+    <!-- Testimonials -->
     <section class="bg-slate-100 py-16 px-4">
-        <h2 class="text-3xl font-bold text-center mb-12 text-emerald-900">Recent Success Stories</h2>
+        <h2 class="text-3xl font-bold text-center mb-12 text-emerald-900">Recent Matches</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto" id="testimonial-grid"></div>
     </section>
+
     <footer class="bg-white py-12 border-t">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="bg-emerald-50 p-6 rounded-2xl border-2 border-dashed border-emerald-200">
-                <p class="text-gray-700 font-medium">
-                    <span class="text-red-600 font-bold">JOIN US:</span> Are you a Kalenjin lady in Kericho looking for a partner?Send your name, age, photos,ID photo (authenticity check) and description to 
-                    <a href="mailto:kerichodating@gmail.com" class="text-emerald-700 font-bold underline">kerichodating@gmail.com</a>. 
-                </p>
+            <div class="bg-emerald-50 p-8 rounded-3xl border-2 border-emerald-200">
+                <h4 class="font-bold text-emerald-900 mb-4">WANT TO BE LISTED?</h4>
+                <p class="text-gray-700 mb-6 text-sm">Send details to: <strong class="text-emerald-700">kerichodating@gmail.com</strong></p>
+                <div class="flex justify-center gap-4 text-xs text-gray-500 font-bold uppercase tracking-widest">
+                    <span><i class="fas fa-lock"></i> Privacy Guaranteed</span>
+                    <span><i class="fas fa-shield-alt"></i> ID Required</span>
+                </div>
             </div>
-            <p class="mt-8 text-gray-400 text-sm">&copy; 2026 Kericho Dating Services. The Pride of Kericho County.</p>
+            <p class="mt-8 text-gray-400 text-xs uppercase tracking-widest">&copy; 2026 KERICHO DATING SERVICES</p>
         </div>
     </footer>
 
+    <!-- Notification Toast -->
+    <div id="notification">
+        <div class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-full flex items-center justify-center">
+            <i class="fas fa-heart"></i>
+        </div>
+        <div>
+            <p id="notif-text" class="text-sm font-bold text-gray-800"></p>
+            <p class="text-[10px] text-gray-500 uppercase font-bold">Just Now</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
     <div id="profileModal" class="modal">
-        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden flex flex-col max-h-[90vh] relative shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-gray-500 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:bg-white">&times;</button>
+        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden flex flex-col max-h-[95vh] relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-gray-500 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center shadow-md">&times;</button>
             
             <div class="flex border-b bg-gray-50">
-                <button onclick="showTab('bio')" id="btn-bio" class="tab-btn active flex-1 py-4 font-bold uppercase text-xs tracking-widest">About Me</button>
-                <button onclick="showTab('photos')" id="btn-photos" class="tab-btn flex-1 py-4 font-bold uppercase text-xs tracking-widest">Gallery</button>
+                <button onclick="showTab('bio')" id="btn-bio" class="tab-btn active flex-1 py-4 font-bold uppercase text-xs">About Her</button>
+                <button onclick="showTab('photos')" id="btn-photos" class="tab-btn flex-1 py-4 font-bold uppercase text-xs">Photos (4)</button>
             </div>
 
             <div class="flex-1 overflow-y-auto">
                 <div id="tab-bio" class="tab-content active p-8">
                     <div class="flex flex-col items-center mb-6">
-                        <img id="modalProfileImg" src="" class="profile-circle mb-4">
+                        <div class="relative">
+                            <img id="modalProfileImg" src="" class="profile-circle mb-4">
+                            <div class="absolute bottom-6 right-2 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
+                        </div>
                         <h2 id="modalName" class="text-2xl font-bold text-gray-800"></h2>
-                        <p id="modalAgeLoc" class="text-emerald-600 font-semibold"></p>
+                        <div class="flex items-center gap-2 text-emerald-600 font-bold">
+                            <span id="modalAgeLoc"></span>
+                            <i class="fas fa-check-circle text-sm"></i>
+                        </div>
                     </div>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <h4 class="text-sm font-bold text-gray-400 uppercase mb-2 tracking-tighter">Personality & Interests</h4>
-                        <p id="modalBioText" class="text-gray-700 leading-relaxed italic"></p>
-                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 leading-relaxed italic text-gray-700" id="modalBioText"></div>
                 </div>
 
                 <div id="tab-photos" class="tab-content h-[450px] bg-zinc-900 relative">
                     <div class="absolute top-4 inset-x-4 flex gap-1 z-20" id="status-bars"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <button onclick="prevPic()" class="absolute left-2 z-30 text-white/50 p-4"><i class="fas fa-chevron-left"></i></button>
-                        <div id="photoContainer" class="w-full h-full"></div>
-                        <button onclick="nextPic()" class="absolute right-2 z-30 text-white/50 p-4"><i class="fas fa-chevron-right"></i></button>
+                        <button onclick="prevPic()" class="absolute left-2 z-30 text-white/50 p-4"><i class="fas fa-chevron-left text-2xl"></i></button>
+                        <div id="photoContainer" class="w-full h-full flex items-center justify-center overflow-hidden"></div>
+                        <button onclick="nextPic()" class="absolute right-2 z-30 text-white/50 p-4"><i class="fas fa-chevron-right text-2xl"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="p-6 bg-white border-t text-center">
-                <p id="unlockDesc" class="text-sm text-gray-500 mb-4"></p>
-                <a href="index2.html" class="flex items-center justify-center gap-3 w-full bg-emerald-600 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-emerald-700 transition active:scale-95">
-                    <i class="fas fa-lock"></i> Get Her WhatsApp Contact
+            <div class="p-6 bg-white border-t">
+                <div class="flex items-center justify-between mb-4 text-xs font-bold text-gray-400">
+                    <span><i class="fas fa-lock mr-1"></i> ENCRYPTED PAYMENT</span>
+                    <span>FEE: KSH 100</span>
+                </div>
+                <a href="payment.html" class="flex items-center justify-center gap-3 w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-emerald-700 transition transform active:scale-95">
+                    <i class="fas fa-unlock"></i> Unlock WhatsApp Number
                 </a>
             </div>
         </div>
@@ -152,16 +188,16 @@
         const profiles = [
             { name: "Mercy Chebet", age: 21, loc: "Kericho Town", job: "Nurse", bio: "I'm Mercy from Kericho. Serving at A.I.C church. Napenda sana kushona. I'm currently jobless but i spend most of my time with my mum in her tailoring shop. Sina mtoi. Looking for a God fearing and a hardworking patner." },
             { name: "Sheila Chepkirui", age: 21, loc: "Kapsoit", job: "Student", bio: "I'm Sheila from Kapsoit, Kericho. A Christian at PEFA church. I like cooking na kupanda maua. I'm employed, nauza fashion clothes and shoes(boutique). Sina any kid. I'm looking for someone who's also a Christian ready to have a family." },
-            { name: "Joy Cheptoo", age: 21, loc: "Litein", job: "student", bio: "Naitwa Joy. 21years. I have my own small shop. On my free time napenda sana kupika chapo. I'm hardworking. No kids. Natafta mtu ako hardworking pia. 'Hard work Pays' is my motto." },
+            { name: "Joy Cheptoo", age: 21, loc: "Litein", job: "Student", bio: "Naitwa Joy. 21years. I have my own small shop. On my free time napenda sana kupika chapo. I'm hardworking. No kids. Natafta mtu ako hardworking pia. 'Hard work Pays' is my motto." },
             { name: "Faith Cherotich", age: 22, loc: "Londiani", job: "Teacher", bio: "I'm Faith. Nafanya kazi kwa saloon. Also serving as a Sunday School teacher at a local church. I like playing with children. Sina mtoi. Looking for someone who's ready to build and have a happy family." },
             { name: "Diana Chepkoech", age: 21, loc: "Brooke", job: "Accountant", bio: "My name is Diana. Nafanya kazi at a local restaurant. A Christian at A.G.C church. On my free time napenda sana kufanya gardening. No kids. Looking for a responsible and a loving patner to start a family with." },
             { name: "Brenda Chepkurui", age: 20, loc: "Ainamoi", job: "Student", bio: "I'm Brenda. A christian. Currently operating my parent's shop. Sina any kid. Ready to settle down and have a family. Looking for a God fearing, kind hearted and a responsible husband." },
             { name: "Naomi Chepkorir", age: 20, loc: "Kipkelion", job: "Farmer", bio: "I'm Naomi, taking food and catering course at a local polytechnic. An active Youth Leader at Deliverance church. No kids. Ready for marriage." },
-            { name: "Vivian Cherono", age: 23, loc: "Soin", job: "Hairdresser", bio: "Naitwa Vivian. Nafanya hairdressing. My dream is to own my own saloon one day. Na pia on my free time i like planting flowers. I love nature. Serving at Faith And Hope Church. Sina mtoi. Looking for a stable, God fearing and caring husband to build a family with." },
-            { name: "Sharon Chepngetich", age: 20, loc: "Kericho Town", job: "Sales Agent", bio: "I'm Sharon, open minded but shy. I'm working in a boutique specifying in selling school uniforms. Nafatufa a loyal patner mwenye tunaendana naye coz I'm very shy around people. On my free time i just stay at home with my pet cat. My dream is to have my own boutique someday as i am experienced in operating it. No kids." },
+            { name: "Vivian Cherono", age: 23, loc: "Soin", job: "Hairdresser", bio: "Naitwa Vivian. Nafanya hairdressing. My dream is to own my own saloon one day. Na pia on my free time i like planting flowers. I love nature. Serving at Faith And Hope Church. Sina mtoi. Looking for a stable, God fearing and caring husband." },
+            { name: "Sharon Chepngetich", age: 20, loc: "Kericho Town", job: "Sales Agent", bio: "I'm Sharon, open minded but shy. I'm working in a boutique specifying in selling school uniforms. Nafatufa a loyal patner mwenye tunaendana naye coz I'm very shy around people. On my free time i just stay at home with my pet cat. No kids." },
             { name: "Cynthia Chelangat", age: 22, loc: "Litein", job: "Catering", bio: "Naitwa Cynthia from Litein, Kericho. Working with my mum operating my dad's hotel. A christian. Simple. I love cooking pilau. I'm looking for someone who appreciates a cool and peaceful home. Sina mtoi. Must be a Christian too." },
             { name: "Daisy Chebet", age: 23, loc: "Kapsoit", job: "Lab Tech", bio: "Naitwa Daisy from Kapsoit. Nimeajiriwa kuuza duka. I'm serving at A.I.C church. At my free time napenda sana kuosha. Napenda usafi. Looking for a smart, God fearing patner for a relationship that would lead to marriage. I don't have any kid." },
-            { name: "Gloria Chepchirchir", age: 21, loc: "Londiani", job: "Secretary", bio: "Naitwa Gloria. A Christian. Currently employed in a agrovet shop. I'm experienced in sales. So my dream is to have my own agrovet one day. Natafta mtu ako God fearing, financially stable na anapenda familia yake. On my free time napenda kusuka nywele. I'm also talented there. Sina mtoto." },
+            { name: "Gloria Chepchirchir", age: 21, loc: "Londiani", job: "Secretary", bio: "Naitwa Gloria. A Christian. Currently employed in a agrovet shop. I'm experienced in sales. So my dream is to have my own agrovet one day. Natafta mtu ako God fearing, financially stable na anapenda familia yake. Sina mtoto." },
             { name: "Ruth Chepkoech", age: 21, loc: "Brooke", job: "Banker", bio: "Naitwa Ruth from Brooke. Operating a small kibanda with chips and mboga. Serving at a local Catholic St Mary's church. No kids. Looking for a serious hardworking patner for a relationship that would lead to marriage." },
             { name: "June Cherotich", age: 22, loc: "Kericho Town", job: "Social Worker", bio: "I'm June. Working in a saloon. A Christian and a youth leader. Cooking is my passion. No kids. I'm working towards having my own saloon. Looking for a ready, loving and responsible patner to have a family with." },
             { name: "Emily Chepkemoi", age: 20, loc: "Ainamoi", job: "Designer", bio: "I'm Emily. I have my own Small (expanding) hotel business. A christian at an SDA church. I'm also talented in knitting. I enjoy listening to music a lot. Sina mtoi. Natafta mtu hardworking." },
@@ -169,7 +205,7 @@
             { name: "Fancy Cherono", age: 22, loc: "Litein", job: "Nail Artist", bio: "Naitwa Fancy. And i love doing Fancy things like nails. Nafanya kazi in a boutique. Sina mtoi. My dream is to have a lovely and a stable family. Looking for a kind hearted and hardworking patner to settle with." },
             { name: "Hellen Chebet", age: 21, loc: "Kericho Town", job: "Pharmacist", bio: "Disciplined and focused. A salonist. A christian at Faith Church. Looking for a Christian patnert to start life with. I have no kids. I also like listening to music and playing guitar." },
             { name: "Purity Chelangat", age: 20, loc: "Kapsoit", job: "Student", bio: "My name is Purity. Operating my aunt's mpesa shop. A Christian at Deliverance church. Sipendi sana kuongea. I prefer silence. Sina any kid. Looking for someone who appreciates and respect me as who i am." },
-            { name: "Rose Chebet", age: 19, loc: "Soin", job: "Tailor", bio: "Naitwa Rose. Hairdresser. I love making people look good. No kids. A christian. Napenda sana kupika. Na kuwatch YouTube documentaries. Looking for a God fearing, financially stable patner to start a family with. Awe Christian pia." }
+            { name: "Rose Chebet", age: 19, loc: "Soin", job: "Tailor", bio: "Naitwa Rose. Hairdresser. I love making people look good. No kids. A christian. Napenda sana kupika. Na kuwatch YouTube documentaries. Looking for a God fearing, financially stable patner. Awe Christian pia." }
         ];
 
         const bgColors = ['#1e40af', '#166534', '#991b1b', '#854d0e'];
@@ -180,38 +216,52 @@
         function init() {
             const grid = document.getElementById('profile-grid');
             const testGrid = document.getElementById('testimonial-grid');
-            const engagedIndices = [];
-            while(engagedIndices.length < 4){
-                let r = Math.floor(Math.random() * 20);
-                if(engagedIndices.indexOf(r) === -1) engagedIndices.push(r);
-            }
-
+            
             profiles.forEach((p, i) => {
                 const fName = p.name.split(' ')[0].toLowerCase();
-                const isEngaged = engagedIndices.includes(i);
+                const isOnline = Math.random() > 0.5;
                 grid.innerHTML += `
                 <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center relative group hover:shadow-xl transition-all">
-                    ${isEngaged ? '<div class="engaged-banner"><i class="fas fa-ring mr-1"></i>ENGAGED</div>' : ''}
-                    <div class="relative mb-4">
-                        <img src="${fName}profile.jpg" onerror="this.src='https://ui-avatars.com/api/?name=${p.name}&background=random'" class="profile-circle">
+                    <div class="absolute top-4 left-4 flex items-center gap-1 bg-white/80 px-2 py-1 rounded-full text-[9px] font-bold text-gray-500 shadow-sm">
+                        <span class="w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-green-500' : 'bg-gray-300'}"></span>
+                        ${isOnline ? 'ACTIVE NOW' : 'ACTIVE TODAY'}
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800">${p.name}</h3>
-                    <p class="text-sm text-gray-400 mb-1">${p.loc}</p>
+                    <div class="relative mb-4 mt-2">
+                        <img src="${fName}profile.jpg" onerror="this.src='https://ui-avatars.com/api/?name=${p.name}&background=random'" class="profile-circle">
+                        <div class="absolute bottom-2 right-2 bg-emerald-500 text-white p-1.5 rounded-full border-2 border-white shadow-lg text-[8px]">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">${p.name} <i class="fas fa-check-circle text-blue-400 text-xs"></i></h3>
+                    <p class="text-xs text-gray-400 mb-1 tracking-widest uppercase">${p.loc}</p>
                     <p class="text-emerald-700 font-bold mb-6">${p.age} Years</p>
-                    <button onclick="openProfileByIndex(${i})" class="w-full bg-slate-50 text-slate-700 py-3 rounded-xl font-bold text-sm mb-2 hover:bg-slate-100">View Bio</button>
-                    ${isEngaged ? 
-                        `<button class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-md cursor-default">Matched</button>` :
-                        `<button onclick="openProfileByIndex(${i})" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold text-sm shadow-md hover:bg-green-700">Connect</button>`
-                    }
+                    <button onclick="openProfileByIndex(${i})" class="w-full bg-slate-50 text-slate-700 py-3 rounded-xl font-bold text-sm mb-2 hover:bg-slate-100 transition">View Details</button>
+                    <button onclick="openProfileByIndex(${i})" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-sm shadow-md hover:bg-emerald-700 transition">Connect</button>
                 </div>`;
             });
 
-            const tNames = ["Ben Omondi", "Geoffrey Koech", "James Oketch", "Dominic Kirui", "Mike Onyango", "Alex Morara"];
-            const quotes = ["Found my soulmate here last year..", "Admin asante. Instant connection. Sai naishi na yeye hapa Narok.", "Found a lady who understands about life. Took her last month to Migori home for introduction.", "Ksh 100 changed my life. Dating 6 months. We're living together here in Bomet. Thanks admin.", "Best dating platform . 3 months pregnant. Can't wait to be called daddy. This site is really magical.", "Thanks for the hookup. Home complete. I opened her a shop here in Ikonge.."];
-            
+            const quotes = ["Found my soulmate here last year..", "Admin asante.Instant connection Sai naishi na yeye hapa Narok.", "Found a lady who understands about life. Took her last month to Migori home for introduction.", "Ksh 100 changed my life. Dating 6 months. We're living together here in Bomet. Thanks admin.", "Best dating platform . 3 months pregnant. Can't wait to be called daddy. This site is really magical.", "Thanks for the hookup. Home complete. I opened her a shop here in Ikonge..."];
             for (let i = 0; i < 6; i++) {
-                testGrid.innerHTML += `<div class="bg-white p-6 rounded-2xl shadow-sm italic text-gray-600 border-l-4 border-emerald-600">"${quotes[i]}"<p class="mt-4 font-bold text-gray-900 not-italic">- ${tNames[i]}</p></div>`;
+                testGrid.innerHTML += `<div class="bg-white p-6 rounded-2xl shadow-sm italic text-gray-600 border-l-4 border-emerald-500 text-sm">"${quotes[i]}"<p class="mt-4 font-bold text-gray-900 not-italic text-xs uppercase tracking-widest">- Verified Member</p></div>`;
             }
+
+            setInterval(showNotification, 8000);
+            setInterval(() => {
+                document.getElementById('live-counter').innerText = Math.floor(Math.random() * (160 - 120) + 120);
+            }, 5000);
+        }
+
+        function showNotification() {
+            const names = ["Kevin", "Robert", "Collins", "Brian", "Emmanuel", "Dennis"];
+            const locations = ["Bomet", "Nakuru", "Kericho", "Kisumu", "Nairobi"];
+            const ladyNames = profiles.map(p => p.name.split(' ')[0]);
+            const name = names[Math.floor(Math.random() * names.length)];
+            const loc = locations[Math.floor(Math.random() * locations.length)];
+            const lady = ladyNames[Math.floor(Math.random() * ladyNames.length)];
+            const notif = document.getElementById('notification');
+            document.getElementById('notif-text').innerText = `${name} from ${loc} matched with ${lady}`;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 4000);
         }
 
         function openProfileByIndex(index) {
@@ -221,7 +271,6 @@
             document.getElementById('modalName').innerText = p.name;
             document.getElementById('modalAgeLoc').innerText = `${p.age} Years • ${p.loc}`;
             document.getElementById('modalBioText').innerText = p.bio;
-            document.getElementById('unlockDesc').innerText = `To get ${p.name}'s phone number and WhatsApp, pay the Ksh 100 service fee.`;
             document.getElementById('modalProfileImg').src = `${activeProfile.fName}profile.jpg`;
             document.getElementById('modalProfileImg').onerror = function() { this.src = `https://ui-avatars.com/api/?name=${p.name}&background=random`; };
             document.getElementById('profileModal').classList.add('active');
@@ -268,18 +317,18 @@
             setTimeout(() => {
                 const currentBar = document.getElementById(`bar-${activePic}`);
                 if(currentBar) {
-                    currentBar.style.transition = 'width 15s linear';
+                    currentBar.style.transition = 'width 10s linear';
                     currentBar.style.width = '100%';
                 }
             }, 50);
-            progressInterval = setInterval(nextPic, 15000);
+            progressInterval = setInterval(nextPic, 10000);
         }
 
         function updatePhoto() {
             const container = document.getElementById('photoContainer');
             const imgUrl = `${activeProfile.fName}pic${activePic}.jpg`;
             const randomColor = bgColors[activePic - 1];
-            container.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<div style=\\'background:${randomColor}\\' class=\\'w-full h-full flex items-center justify-center text-white text-2xl font-bold\\'>Photo ${activePic}</div>'">`;
+            container.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<div style=\\'background:${randomColor}\\' class=\\'w-full h-full flex flex-col items-center justify-center text-white p-12 text-center\\'><i class=\\'fas fa-lock text-4xl mb-4 opacity-50\\'></i><p class=\\'font-bold text-sm uppercase tracking-widest\\'>Photo ${activePic}<br><span class=\\'text-[10px] opacity-75\\'>Pay to Unlock Full Gallery</span></p></div>'">`;
         }
 
         function nextPic() {
@@ -302,4 +351,4 @@
         window.onload = init;
     </script>
 </body>
-                </html>
+</html>
