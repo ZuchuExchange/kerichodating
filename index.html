@@ -241,7 +241,7 @@
                 </div>`;
             });
 
-            const quotes = ["Found my soulmate here last year..", "Admin asante.Instant connection Sai naishi na yeye hapa Narok.", "Found a lady who understands about life. Took her last month to Migori home for introduction.", "Ksh 100 changed my life. Dating 6 months. We're living together here in Bomet. Thanks admin.", "Best dating platform . 3 months pregnant. Can't wait to be called daddy. This site is really magical.", "Thanks for the hookup. Home complete. I opened her a shop here in Ikonge..."];
+            const quotes = ["Found my soulmate here last year..", "Admin asante.Instant connection Sai naishi na yeye hapa Narok.", "Found a lady who understands about life. Took her last month to Migori home for introduction.", "Ksh 50 changed my life. Dating 6 months. We're living together here in Bomet. Thanks admin.", "Best dating platform . 3 months pregnant. Can't wait to be called daddy. This site is really magical.", "Thanks for the hookup. Home complete. I opened her a shop here in Ikonge..."];
             for (let i = 0; i < 6; i++) {
                 testGrid.innerHTML += `<div class="bg-white p-6 rounded-2xl shadow-sm italic text-gray-600 border-l-4 border-emerald-500 text-sm">"${quotes[i]}"<p class="mt-4 font-bold text-gray-900 not-italic text-xs uppercase tracking-widest">- Verified Member</p></div>`;
             }
@@ -253,8 +253,8 @@
         }
 
         function showNotification() {
-            const names = ["Kevin", "Robert", "Collins", "Brian", "Emmanuel", "Dennis"];
-            const locations = ["Bomet", "Nakuru", "Kericho", "Kisumu", "Nairobi"];
+            const names = ["Kevin", "Robert", "Collins", "Brian", "Emmanuel", "Dennis", "Caleb", "Raymond", "Jude", "Andrew", "Fred", "James", "Alex", "Aslay", "Vinny"];
+            const locations = ["Bomet", "Nakuru", "Kericho", "Kisumu", "Nairobi","Eldoret", "HomaBay", "Kisii", "Nyamira", "Vihiga", "Kwale", "Machakos", "Narok", "Meru", "Kiambu"];
             const ladyNames = profiles.map(p => p.name.split(' ')[0]);
             const name = names[Math.floor(Math.random() * names.length)];
             const loc = locations[Math.floor(Math.random() * locations.length)];
