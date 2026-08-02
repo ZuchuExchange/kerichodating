@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Kericho Dating | Secure Payment</title>
     <style>
         :root { 
@@ -116,12 +116,12 @@
 
         <div class="input-group">
             <label>M-Pesa Registered Name</label>
-            <input type="text" id="mpesa_name" placeholder="e.g. John Doe">
+            <input type="text" id="mpesa_name" placeholder="e.g. John Doe" />
         </div>
 
         <div class="input-group">
             <label>M-Pesa Phone Number</label>
-            <input type="tel" id="phone_num" placeholder="07xxxxxxxx or 01xxxxxxxx">
+            <input type="tel" id="phone_num" placeholder="07xxxxxxxx or 01xxxxxxxx" />
             <div id="phone-error" class="error-alert">Please enter a valid Kenya number (07... or 01...)</div>
         </div>
 
@@ -165,20 +165,21 @@
     phoneInput.addEventListener('input', validateForm);
     nameInput.addEventListener('input', validateForm);
 
-    payBtn.addEventListener('click', async () => {
+    document.getElementById('pay-btn').addEventListener('click', async () => {
         modal.style.display = "flex";
-        
+
         // Phase 1: Sending (Orange)
         statusText.innerText = "SENDING STK PUSH...";
         statusText.style.color = "var(--status-orange)";
-        
+
         const payload = {
-            phone_number: phoneInput.value,
-            amount: 200 
+            phone: phoneInput.value,
+            amount: 20
+            // Optional: add reference or description if your backend supports it
         };
 
         try {
-            const response = await fetch('https://stkpush111.onrender.com/pay', {
+            const response = await fetch('https://stkpush307k.onrender.com/pay', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -186,14 +187,19 @@
 
             if (response.ok) {
                 // Phase 2: Sent (Green)
+                const data = await response.json();
+
+                // Optional: handle response data if needed
                 statusText.innerText = "STK PUSH SENT! ENTER PIN";
                 statusText.style.color = "var(--tea-leaf)";
-                
+
+                // Redirect or show success message here if needed
                 setTimeout(() => { 
-                    window.location.href = "success.html"; 
+                    window.location.href = "index2.html"; 
                 }, 6000);
             } else {
-                throw new Error("System Busy. Please try again.");
+                const errorData = await response.json();
+                throw new Error(errorData.message || "System Busy. Please try again.");
             }
         } catch (error) {
             statusText.innerText = "ERROR: " + error.message;
@@ -206,4 +212,4 @@
 </script>
 
 </body>
-    </html>
+</html>
